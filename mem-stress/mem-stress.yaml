@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mem-stress
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mem-stress
+  template:
+    metadata:
+      labels:
+        app: mem-stress
+    spec:
+      containers:
+      - image: mem-stress
+        imagePullPolicy: IfNotPresent
+        name: mem-stress
+        resources:
+          limits:
+            cpu: "3"
+            memory: 6Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi

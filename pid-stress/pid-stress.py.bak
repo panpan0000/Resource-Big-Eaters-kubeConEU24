@@ -1,0 +1,18 @@
+import os
+import time
+i=0
+while True:
+    pid = os.fork()
+    time.sleep(1)
+
+    if pid < 0:
+     print("Failed to fork a child process")
+     print("Error code: ", os.errno)
+     time.sleep(1)
+    elif pid == 0:
+     i=i+1
+     print("This is the child process %d",i)
+    else:
+     i=i+1
+     print("This is the parent process%d",i)
+

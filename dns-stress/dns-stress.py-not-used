@@ -1,0 +1,14 @@
+import subprocess
+import random
+import string
+import time
+
+while True:
+    random_url = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10)) + '.com'
+    
+    command = f"nslookup {random_url}"
+    result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print(result)
+    
+    #time.sleep(1)
+

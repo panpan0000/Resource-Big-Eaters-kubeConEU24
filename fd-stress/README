@@ -1,0 +1,10 @@
+sysctl -w 
+sysctl -w fs.file-max=6000
+nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-1  fd-test:latest
+sleep 30
+nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-2  fd-test:latest
+
+watch -n 1 cat /proc/sys/fs/file-nr
+
+#when fd-test-1 eats up all file-nr, container 2 failed to get FD.
+

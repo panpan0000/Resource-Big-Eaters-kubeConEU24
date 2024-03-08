@@ -1,0 +1,6 @@
+docker build -t conntrack-stress . && docker save conntrack-stress > conntrack-stress.img &&  scp  conntrack-stress.img 10.20.100.177:/tmp
+
+
+#kubectl create deploy conntrack-stress --image=conntrack-stress
+
+#kubectl scale deploy conntrack-stress --replicas=10

@@ -1,0 +1,6 @@
+docker build -t dns-stress . && docker save dns-stress > dns-stress.img &&  scp  dns-stress.img 10.20.100.177:/tmp
+
+
+kubectl create deploy dns-stress --image=dns-stress
+
+kubectl scale deploy dns-stress --replicas=10

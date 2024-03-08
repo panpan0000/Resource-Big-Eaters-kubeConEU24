@@ -1,0 +1,6 @@
+docker build -t pid-stress . && docker save pid-stress > pid-stress.img &&  scp  pid-stress.img 10.20.100.177:/tmp
+
+
+kubectl create deploy pid-stress --image=pid-stress
+
+kubectl scale deploy pid-stress --replicas=10
