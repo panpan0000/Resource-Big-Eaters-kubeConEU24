@@ -1,6 +1,22 @@
-docker build -t pid-stress . && docker save pid-stress > pid-stress.img &&  scp  pid-stress.img 10.20.100.177:/tmp
+docker build -t pid-stress .
 
 
 kubectl create deploy pid-stress --image=pid-stress
 
 kubectl scale deploy pid-stress --replicas=10
+
+
+####################################
+
+# Check pid-max in your system
+sysctl kernel.pid_max
+
+# CentOS: check kube Pod default value
+cat /sys/fs/cgroup/pids/kubepods.slice/pids.max
+# Ubuntu: check kube Pod default value
+cat /sys/fs/cgroup/kubepods.slice/pids.max
+
+# Check if  kernel.pid_max >> podPidsLimit * maxPods
+
+# check if Node has PIDPressure
+kubectl describe no |grep PIDPressure

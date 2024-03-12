@@ -11,7 +11,7 @@ def worker(counter):
                 print("Error code: ", os.errno)
                 time.sleep(0.5)
             elif pid == 0:
-                # 子进程
+                # sub-sub-Process
                 with counter.get_lock():
                     counter.value += 1
                 if counter.value > 5000: 
@@ -21,17 +21,18 @@ def worker(counter):
         except Exception as e:
                 print("Exception : ",e)
                 time.sleep(1)
+
 if __name__ == '__main__':
     counter = multiprocessing.Value('i', 0)
     
-    # 创建多个子进程
+    # Create several sub-process
     processes = []
     for _ in range(5):
         p = multiprocessing.Process(target=worker, args=(counter,))
         p.start()
         processes.append(p)
     
-    # 等待所有子进程结束
+    # wait for all sub-process
     for p in processes:
         p.join()
     
