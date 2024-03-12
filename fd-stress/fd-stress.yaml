@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fd-stress
+  namespace: default
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: fd-stress
+  template:
+    metadata:
+      labels:
+        app: fd-stress
+    spec:
+      containers:
+      - image: fd-test
+        imagePullPolicy: IfNotPresent
+        name: fd-test

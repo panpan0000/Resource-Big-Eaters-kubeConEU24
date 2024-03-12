@@ -1,8 +1,23 @@
+
+
+docker build -t fd-stress .
+
+# make a small for system max open file limit, to help recreate problem quickly
+# recoard old value
 sysctl -w 
+# set to a small value
 sysctl -w fs.file-max=6000
-nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-1  fd-test:latest
-sleep 30
-nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-2  fd-test:latest
+
+
+
+
+kubectl apply -f fd-stress.yaml
+kubectl scale deploy fd-stress --replicas=2
+
+#nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-1  fd-test:latest
+#sleep 30
+#nerdctl run --ulimit nofile=262144:262144  --rm -it  --name fd-test-2  fd-test:latest
+
 
 watch -n 1 cat /proc/sys/fs/file-nr
 
