@@ -1,6 +1,12 @@
-docker build -t conntrack-stress . && docker save conntrack-stress > conntrack-stress.img &&  scp  conntrack-stress.img 10.20.100.177:/tmp
+docker build -t conntrack-stress . 
+
+kubectl create deploy conntrack-stress --image=conntrack-stress
+
+# check your kernel parameter  total value for conntrack
+sysctl  net.netfilter.nf_conntrack_max
 
 
-#kubectl create deploy conntrack-stress --image=conntrack-stress
+# increase the stress
+kubectl scale deploy conntrack-stress --replicas=10
 
-#kubectl scale deploy conntrack-stress --replicas=10
+# find if there is any error log from "dmesg" looks like "nf_conntrack:table full,dropping packet"
