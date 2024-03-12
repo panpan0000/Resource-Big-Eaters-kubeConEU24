@@ -1,0 +1,11 @@
+gcc mem-stress.c  -o mem-stress
+docker build -t mem-stress . 
+
+#kubectl create deploy mem-stress --image=mem-stress
+kubectl apply -f mem-stress.yaml
+
+# increase the stress
+kubectl scale deploy mem-stress --replicas=10
+
+# for old kernel like CentOS 7, system will hang
+# for newer kernel like Ubuntu 22.04, Pod will be OOM killed timely, but system performance will be impacted and load will be increase a bit.
