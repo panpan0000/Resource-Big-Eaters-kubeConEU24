@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: net-tools
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: net-tools
+  template:
+    metadata:
+      labels:
+        app: net-tools
+    spec:
+      containers:
+      - command: ["/bin/sh", "-c"]
+        args:
+          -  set -x ;
+             while true; do
+             nslookup kubernetes.default.svc.cluster.local;
+             sleep 1;
+             done
+        image: arunvelsriram/utils
+        imagePullPolicy: IfNotPresent
+        name: utils
+        resources: {}

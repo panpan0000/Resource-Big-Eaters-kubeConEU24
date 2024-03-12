@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-stress
+  namespace: default
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: dns-stress
+  template:
+    metadata:
+      labels:
+        app: dns-stress
+    spec:
+      containers:
+      - image: dns-stress
+        env:
+        - name: DomainName 
+          value: "kubernetes.default.svc.cluster.local"
+        imagePullPolicy: IfNotPresent
+        name: dns-stress
+        resources: {}
+      dnsPolicy: ClusterFirst

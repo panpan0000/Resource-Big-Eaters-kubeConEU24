@@ -1,5 +1,5 @@
-FROM python:3.9
+FROM busybox
 
-COPY dnsstress/dnsstress  /dnsstress
-
-CMD ["/dnsstress", "-r","10.233.0.3:53","-inf","baidu.com"]
+COPY dnsstress/dnsstress  /usr/bin/dnsstress
+COPY start.sh /
+CMD ["sh", "/start.sh"]
